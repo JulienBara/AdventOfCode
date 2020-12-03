@@ -11,11 +11,7 @@ namespace _2_PasswordPhilosophy
 
         public bool IsValid()
         {
-            var count = Password
-                .ToCharArray()
-                .Where(x => x == Char)
-                .Count();
-            return MinChar <= count && count <= MaxChar;
+            return Password[MinChar-1] == Char ^ Password[MaxChar-1] == Char;
         }
     }
 }
