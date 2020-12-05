@@ -55,7 +55,7 @@ namespace _4_PassportProcessing_2
         public string EyeColor => EyeColorRegex.Match(String).Groups["ecl"].Value;
         public bool IsEyeColorValid => 
             ! string.IsNullOrEmpty(EyeColor)
-            && Regex.IsMatch(EyeColor, @"[amb|blu|brn|gry|grn|hzl|oth]")
+            && Regex.IsMatch(EyeColor, @"amb|blu|brn|gry|grn|hzl|oth")
             ;
 
         public static Regex PassportIdRegex = new Regex(@"pid:(?<pid>.+?)\b");
