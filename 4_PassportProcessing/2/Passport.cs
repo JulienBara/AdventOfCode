@@ -44,11 +44,11 @@ namespace _4_PassportProcessing_2
             )
             ;        
 
-        public static Regex HairColorRegex = new Regex(@"hcl:#(?<hcl>.+?)\b");
+        public static Regex HairColorRegex = new Regex(@"hcl:(?<hcl>#.+?)\b");
         public string HairColor => HairColorRegex.Match(String).Groups["hcl"].Value;
         public bool IsHairColorValid => 
             ! string.IsNullOrEmpty(HairColor)
-            && Regex.IsMatch(HairColor, @"[0-9a-f]{6}")
+            && Regex.IsMatch(HairColor, @"#[0-9a-f]{6}")
             ;
 
         public static Regex EyeColorRegex = new Regex(@"ecl:(?<ecl>.+?)\b");
