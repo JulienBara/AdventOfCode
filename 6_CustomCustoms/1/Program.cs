@@ -5,7 +5,6 @@ using  _6_CustomCustoms_1;
 
 var inputFile = @".\input";
 
-
 var sumCountDifferentYes = File
     .ReadAllText(inputFile)
     .Split($"{Environment.NewLine}{Environment.NewLine}")
