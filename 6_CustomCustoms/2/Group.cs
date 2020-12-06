@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace _6_CustomCustoms_2
@@ -7,10 +8,14 @@ namespace _6_CustomCustoms_2
     {
         public string String { get; set; }
 
-        public int NumberOfDifferentYes => String
-            .ToCharArray()
-            .Where(x => !string.IsNullOrWhiteSpace(x.ToString()))
-            .Distinct()
+        public List<string> PassengersStrings => String
+            .Split(Environment.NewLine)
+            .ToList()
+            ;
+
+        public int NumberOfDifferentYes => PassengersStrings
+            .First()
+            .Where(x => PassengersStrings.All(y => y.Contains(x)))
             .Count()
             ;
     }
