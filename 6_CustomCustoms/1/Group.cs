@@ -1,17 +1,20 @@
-using System;
 using System.Linq;
 
 namespace _6_CustomCustoms_1
 {
     public class Group
     {
-        public string String { get; set; }
+        private string _toParse;
 
-        public int NumberOfDifferentYes => String
+        public Group(string toParse)
+        {
+            _toParse = toParse;
+        }
+
+        public int NumberOfDifferentYes => _toParse
             .ToCharArray()
-            .Where(x => !string.IsNullOrWhiteSpace(x.ToString()))
+            .Where(character => character.ToString() != System.Environment.NewLine)
             .Distinct()
-            .Count()
-            ;
+            .Count();
     }
 }
