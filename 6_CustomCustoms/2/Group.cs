@@ -19,8 +19,7 @@ namespace _6_CustomCustoms_2
 
         public int NumberOfDifferentYes => PassengersStrings
             .First()
-            .Where(character => PassengersStrings
-                .All(passengerString => passengerString.Contains(character)))
+            .Where(character => PassengersStrings.All(passengerString => passengerString.Contains(character)))
             .Count();
     }
 }

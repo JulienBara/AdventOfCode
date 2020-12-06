@@ -9,7 +9,6 @@ var sumCountDifferentYes = File
     .ReadAllText(inputFile)
     .Split($"{Environment.NewLine}{Environment.NewLine}")
     .Select(groupString => new Group(groupString))
-    .Sum(x => x.NumberOfDifferentYes)
-    ;
+    .Sum(x => x.NumberOfDifferentYes);
 
 System.Console.WriteLine(sumCountDifferentYes);
