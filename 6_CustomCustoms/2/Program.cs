@@ -5,10 +5,10 @@ using _6_CustomCustoms_2;
 
 var inputFile = @".\input";
 
-var sumCountDifferentYes = File
+var sumNumberOfDifferentYesPerGroup = File
     .ReadAllText(inputFile)
     .Split($"{Environment.NewLine}{Environment.NewLine}")
     .Select(groupString => new Group(groupString))
     .Sum(x => x.NumberOfDifferentYes);
 
-System.Console.WriteLine(sumCountDifferentYes);
+System.Console.WriteLine(sumNumberOfDifferentYesPerGroup);
