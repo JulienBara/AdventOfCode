@@ -6,17 +6,21 @@ namespace _6_CustomCustoms_2
 {
     public class Group
     {
-        public string String { get; set; }
+        private string _toParse;
 
-        public List<string> PassengersStrings => String
+        public Group(string toParse)
+        {
+            _toParse = toParse;
+        }
+
+        public List<string> PassengersStrings => _toParse
             .Split(Environment.NewLine)
-            .ToList()
-            ;
+            .ToList();
 
         public int NumberOfDifferentYes => PassengersStrings
             .First()
-            .Where(x => PassengersStrings.All(y => y.Contains(x)))
-            .Count()
-            ;
+            .Where(character => PassengersStrings
+                .All(passengerString => passengerString.Contains(character)))
+            .Count();
     }
 }
