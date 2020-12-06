@@ -11,4 +11,4 @@ var sumGroupNumberOfDifferentYes = File
     .Select(groupString => new Group(groupString))
     .Sum(group => group.NumberOfDifferentYes);
 
-System.Console.WriteLine(sumGroupNumberOfDifferentYes);
+Console.WriteLine(sumGroupNumberOfDifferentYes);
