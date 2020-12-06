@@ -12,7 +12,6 @@ namespace _6_CustomCustoms_1
         }
 
         public int NumberOfDifferentYes => _toParse
-            .ToCharArray()
             .Where(character => character.ToString() != System.Environment.NewLine)
             .Distinct()
             .Count();
