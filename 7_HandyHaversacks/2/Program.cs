@@ -11,29 +11,26 @@ var bags = File
     .Select(x => new Bag(x))
     .ToDictionary(x => x.Name);
 
-var whiteBags = bags.Keys.ToList();
 var greyBags = new List<string>();
-var blackBags = new List<string>();
+var count = 0;
 
 var startBag = "shiny gold";
-whiteBags.Remove(startBag);
 greyBags.Add(startBag);
 
 while(greyBags.Count > 0)
 {
     var greyBag = greyBags.First();
     greyBags.Remove(greyBag);
-    blackBags.Add(greyBag);
-    var containingBags = whiteBags
-        .Where(x => bags[x].Targets.Contains(greyBag))
-        .ToList();
-    foreach (var containingBag in containingBags)
+    count++;
+    foreach (var targetBag in bags[greyBag].Targets)
     {
-        whiteBags.Remove(containingBag);
-        greyBags.Add(containingBag);
+        for (int i = 0; i < targetBag.Item2; i++)
+        {
+            greyBags.Add(targetBag.Item1);
+        }  
     }
 }
 
-blackBags.Remove(startBag);
+count--; // startBag
 
-Console.WriteLine(blackBags.Count);
+Console.WriteLine(count);

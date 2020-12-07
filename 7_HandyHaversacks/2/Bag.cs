@@ -19,13 +19,14 @@ namespace _7_HandyHaversacks_2
             .Groups["name"]
             .Value;
 
-        public List<string> Targets => Regex
+        public List<(string,int)> Targets => Regex
             .Match(_toParse, @"contain (?<names>.+).")
             .Groups["names"]
             .Value
             .Split(", ")
-            .Select(x => Regex.Match(x, @"\d (?<name>.+) bag").Groups["name"].Value)
-            .Where(x => x != String.Empty)
+            .Select(x => Regex.Match(x, @"(?<count>\d) (?<name>.+) bag").Groups)
+            .Where(x => x["name"].Value != String.Empty)
+            .Select(x => (x["name"].Value, int.Parse(x["count"].Value)))
             .ToList();
     }
 }

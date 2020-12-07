@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace _7_HandyHaversacks_1
@@ -19,13 +20,14 @@ namespace _7_HandyHaversacks_1
             .Groups["name"]
             .Value;
 
-        public List<string> Targets => Regex
+        public List<(string,int)> Targets => Regex
             .Match(_toParse, @"contain (?<names>.+).")
             .Groups["names"]
             .Value
             .Split(", ")
-            .Select(x => Regex.Match(x, @"\d (?<name>.+) bag").Groups["name"].Value)
-            .Where(x => x != String.Empty)
+            .Select(x => Regex.Match(x, @"(?<count>\d) (?<name>.+) bag").Groups)
+            .Select(x => (x["name"].Value, int.Parse(x["count"].Value)))
+            .Where(x => x.Item1 != String.Empty)
             .ToList();
     }
 }
