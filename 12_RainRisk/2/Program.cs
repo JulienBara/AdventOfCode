@@ -14,52 +14,82 @@ var instructions = File
     })
     .ToList();
 
-var e = 0;
-var n = 0;
-var face = "E";
-var rCardinalOrder = new List<string>{"N", "E", "S", "W"};
-var lCardinalOrder = new List<string>{"N", "W", "S", "E"};
+var shipE = 0;
+var shipN = 0;
+var waypointE = 10;
+var waypointN = 1;
 
 foreach (var instruction in instructions)
 {
     switch (instruction.Action)
     {
         case "N":
-            n += instruction.Value;
+            waypointN += instruction.Value;
             break;
         case "S":
-            n -= instruction.Value;
+            waypointN -= instruction.Value;
             break;
         case "E":
-            e += instruction.Value;
+            waypointE += instruction.Value;
             break;
         case "W":
-            e -= instruction.Value;
+            waypointE -= instruction.Value;
             break;
         case "F":
-            switch (face)
-            {
-                case "N":
-                    n += instruction.Value;
-                    break;
-                case "S":
-                    n -= instruction.Value;
-                    break;
-                case "E":
-                    e += instruction.Value;
-                    break;
-                case "W":
-                    e -= instruction.Value;
-                    break;
-            }
+            shipN += instruction.Value * waypointN;
+            shipE += instruction.Value * waypointE;
             break;
         case "R":
-            face = rCardinalOrder[(rCardinalOrder.IndexOf(face) + instruction.Value / 90) % 4];
+            switch (instruction.Value)
+            {
+                case 90:
+                    {
+                        var tempWaypointE = waypointE;
+                        waypointE = waypointN;
+                        waypointN = -tempWaypointE;
+                    }
+                    break;
+                case 180:
+                    waypointN *= -1;
+                    waypointE *= -1;
+                    break;
+                case 270:
+                    {
+                        var tempWaypointE = waypointE;
+                        waypointE = -waypointN;
+                        waypointN = +tempWaypointE;
+                    }
+                    break;
+                default:
+                    throw new Exception($"Incorrect value {instruction.Value}");
+            };
             break;
         case "L":
-            face = lCardinalOrder[(lCardinalOrder.IndexOf(face) + instruction.Value / 90) % 4];
+            switch (instruction.Value)
+            {
+                case 90:
+                    {
+                        var tempWaypointE = waypointE;
+                        waypointE = -waypointN;
+                        waypointN = tempWaypointE;
+                    }
+                    break;
+                case 180:
+                    waypointN *= -1;
+                    waypointE *= -1;
+                    break;
+                case 270:
+                    {
+                        var tempWaypointE = waypointE;
+                        waypointE = waypointN;
+                        waypointN = -tempWaypointE;
+                    }
+                    break;
+                default:
+                    throw new Exception($"Incorrect value {instruction.Value}");
+            };
             break;
     }
 }
 
-System.Console.WriteLine(Math.Abs(n) + Math.Abs(e));
+System.Console.WriteLine(Math.Abs(shipN) + Math.Abs(shipE));
