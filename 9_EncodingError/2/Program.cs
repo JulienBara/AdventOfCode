@@ -1,26 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 var inputFile = @".\input";
-var preambuleSize = 25;
+var invalidNumber = 258585477;
 
 var numbers = File
     .ReadAllLines(inputFile)
     .Select(x => long.Parse(x))
     .ToList();
 
-for (int i = preambuleSize; i < numbers.Count; i++)
+var queue = new Queue <long>();
+
+for (int i = 0; i < numbers.Count; i++)
 {
-    var isSum = false;
-    for (int j = Math.Max(0, i - preambuleSize); j < i; j++)
-    {
-        for (int k = j + 1; k < i; k++)
-        {
-            if(numbers[j] + numbers[k] == numbers[i])
-                isSum = true;
-        }
-    }
-    if(! isSum)
-        Console.WriteLine(numbers[i]);
+    queue.Enqueue(numbers[i]);
+    while(queue.Sum() > invalidNumber)
+        queue.Dequeue();
+    if(queue.Sum() == invalidNumber)
+        Console.WriteLine(queue.OrderBy(x => x).First() + queue.OrderBy(x => x).Last());
 }
