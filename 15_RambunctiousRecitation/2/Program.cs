@@ -4,35 +4,44 @@ using System.IO;
 using System.Linq;
 
 var inputFile = @".\input";
-var stopCount = 2020;
+var stopTour = 30000000;
 
 var startingNumbers = File
     .ReadAllText(inputFile)
     .Split(",")
     .Select(x => long.Parse(x));
 
-var count = 0;
-var numbers = new List<long>();
+var tour = 0;
+var numbers = new Dictionary<long, long>(); // number, last tour
+long previousNumber = 0;
+bool previousNumberExisted = false;
+long previousNumberPreviousTour = 0;
 
 foreach (var startingNumber in startingNumbers)
 {
-    numbers.Add(startingNumber);
-    count++;
+    tour++;
+    previousNumber = startingNumber;
+    previousNumberExisted = numbers.ContainsKey(previousNumber);
+    previousNumberPreviousTour = previousNumberExisted ? numbers[previousNumber] : 0;
+
+    numbers[previousNumber] = tour;
 }
 
-while (count < stopCount)
+while (tour < stopTour)
 {
-    var number = numbers.Last();
     long nextNumber;
-    if(numbers.Where(x => x == number).Count() == 1){
+    if(! previousNumberExisted){
         nextNumber = 0;
     }else{
-        nextNumber = numbers.Count() 
-            - (numbers.LastIndexOf(number, numbers.Count() - 2) + 1); // last tour number = last index + 1
+        nextNumber = tour - previousNumberPreviousTour;
     }
 
-    numbers.Add(nextNumber);
-    count++;
+    previousNumber = nextNumber;
+    previousNumberExisted = numbers.ContainsKey(previousNumber);
+    previousNumberPreviousTour = previousNumberExisted ? numbers[previousNumber] : 0;
+
+    tour++;
+    numbers[previousNumber] = tour;
 }
 
-Console.WriteLine(numbers.Last());
+Console.WriteLine(previousNumber);
