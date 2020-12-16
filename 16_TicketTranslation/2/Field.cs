@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -10,6 +8,10 @@ namespace _16_TicketTranslation_2
     public class Field
     {
         public string String { get; set; }
+
+        public string Name => String
+            .Split(":")
+            .First();
 
         public static Regex RangesRegex = new Regex(@"(?<startRange>\d+?)-(?<endRange>\d+?)\b");
         public IEnumerable<(int, int)> Ranges => RangesRegex

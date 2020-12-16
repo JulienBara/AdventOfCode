@@ -27,14 +27,56 @@ var nearbyTickets = input
         .Split(",")
         .Select(y => int.Parse(y)));
 
-var sum = 0;
+var validTickets = new List<List<int>>();
 foreach (var nearbyTicket in nearbyTickets)
 {
+    var ticketIsValid = true;
     foreach (var value in nearbyTicket)
     {
         if(! fields.Any(x => x.Validator(value)))
-            sum += value;
+            ticketIsValid = false;
+    }
+    if(ticketIsValid)
+        validTickets.Add(nearbyTicket.ToList());
+}
+
+
+var possibleFields = fields.Select(x => x.Name).ToList();
+var indexesToAssign = new List<int>();
+for (int i = 0; i < yourTicket.Count(); i++)
+{
+    indexesToAssign.Add(i);
+}
+
+var indexToField = new Dictionary<int, string>();
+while(indexesToAssign.Count > 0)
+{
+    foreach (var index in new List<int>(indexesToAssign))
+    {
+        var countPossibleFields = 0;
+        string lastPossibleField = null;
+        foreach (var possibleField in possibleFields)
+        {
+            if(validTickets.All(x => fields.First(x => x.Name == possibleField).Validator(x[index])))
+            {
+                countPossibleFields++;
+                lastPossibleField = possibleField;
+            }               
+        }
+        if(countPossibleFields == 1)
+        {
+            indexesToAssign.Remove(index);
+            possibleFields.Remove(lastPossibleField);
+            indexToField.Add(index, lastPossibleField);
+        }
     }
 }
 
-Console.WriteLine(sum);
+long product = 1;
+foreach (var field in indexToField)
+{
+    if(field.Value.StartsWith("departure"))
+        product *= yourTicket.ToList()[field.Key];
+}
+
+Console.WriteLine(product);
