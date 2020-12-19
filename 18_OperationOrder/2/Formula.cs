@@ -18,30 +18,26 @@ namespace _18_OperationOrder_2
                     match => new Formula { String = match.Value.Substring(1, match.Value.Length - 2) }.EvaluateValue()
                 );
             }
-            
-            var items = s.Split(" ");
 
-            var accu = long.Parse(items.First());
-
-            for (int i = 1; i < items.Length; i += 2)
+            while(s.Contains("+"))
             {
-                switch (items[i])
-                {
-                    case "+":
-                        accu += long.Parse(items[i+1]);
-                        break;
-                    case "-":
-                        accu -= long.Parse(items[i+1]);
-                        break;
-                    case "*":
-                        accu *= long.Parse(items[i+1]);
-                        break;
-                    case "/":
-                        accu /= long.Parse(items[i+1]);
-                        break;
-                }
+                s = Regex.Replace(
+                    s, 
+                    @"(?<firstPart>\d+?) \+ (?<secondPart>\d+)",
+                    match => (long.Parse(match.Groups["firstPart"].Value) + long.Parse(match.Groups["secondPart"].Value)).ToString()
+                );
             }
-            return accu.ToString();
+
+            while(s.Contains("*"))
+            {
+                s = Regex.Replace(
+                    s, 
+                    @"(?<firstPart>\d+?) \* (?<secondPart>\d+)",
+                    match => (long.Parse(match.Groups["firstPart"].Value) * long.Parse(match.Groups["secondPart"].Value)).ToString()
+                );
+            }
+            
+            return s;
         }
     }
 }
