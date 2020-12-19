@@ -18,7 +18,7 @@ var messages = input
     [1]
     .Split(Environment.NewLine);
 
-rules[0].GetRegexPattern(rules);
+rules[0].GetRegexPattern(rules, 0);
 var matchFunc = rules[0].MatchesRegex;
 
 var sum = messages
