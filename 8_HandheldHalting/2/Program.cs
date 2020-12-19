@@ -65,4 +65,4 @@ for (int i = 0; i < lines.Count; i++)
 
     if(nextInstructionIndex == lines.Count)
         Console.WriteLine(accumulator);
-}8.2
+}
