@@ -60,5 +60,25 @@ namespace _20_JurassicJigsaw_2
                 .Count();
             return countMatchingBorders == 2;
         }
+
+        // mutation
+        public void Rotate(int degrees) // horaire
+        {
+            for (int i = 0; i < degrees; i+=90)
+            {
+                var lines = new List<string>();
+                for (int j = 0; j < Square.Count; j++)
+                {
+                    var line = "";
+                    for (int k = 0; k < Square.Count; k++)
+                    {
+                        line += Square[Square.Count-k-1][j];
+                    }
+                    lines.Add(line);
+                }
+                String = "Tile " + Id + ":" + Environment.NewLine
+                + string.Join(Environment.NewLine, lines);
+            }  
+        }
     }
 }
