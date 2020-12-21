@@ -20,65 +20,11 @@ namespace _20_JurassicJigsaw_2
             .Skip(1)
             .ToList();
 
-        public string NorthLine => Square.First();
-        public string SouthLine => Square
-            .Last()
-            .Reverse()
-            .Aggregate("", (s, c) => s += c);
-        public string WestLine => Square
-            .Select(x => x.First())
-            .Reverse()
-            .Aggregate("", (s, c) => s += c);         
-        public string EastLine => Square
-            .Select(x => x.Last())
-            .Aggregate("", (s, c) => s += c);
-
-        
-        public List<string> Lines => new List<string>
-            {
-                NorthLine,
-                EastLine,
-                SouthLine,
-                WestLine
-            };
-
-        public List<string> ReversedLines => Lines
-            .Select(x => x.Reverse().Aggregate("", (s, c) => s += c))
-            .ToList();
-
-        public List<string> AllLines => Lines
-            .Concat(ReversedLines)
-            .ToList();
-
-        public bool IsCorner(List<Tile> tiles)
-        {
-            var filteredTiles = tiles.Where(x => x.Id != Id);
-            var countMatchingBorders = Lines
-                .Where(line => filteredTiles
-                    .Any(filteredTile => filteredTile.AllLines.Contains(line))
-                )
-                .Count();
-            return countMatchingBorders == 2;
-        }
-
-        // mutation
-        public void Rotate(int degrees) // horaire
-        {
-            for (int i = 0; i < degrees; i+=90)
-            {
-                var lines = new List<string>();
-                for (int j = 0; j < Square.Count; j++)
-                {
-                    var line = "";
-                    for (int k = 0; k < Square.Count; k++)
-                    {
-                        line += Square[Square.Count-k-1][j];
-                    }
-                    lines.Add(line);
-                }
-                String = "Tile " + Id + ":" + Environment.NewLine
-                + string.Join(Environment.NewLine, lines);
-            }  
-        }
+        public int CountInside => Square
+            .Skip(1)
+            .SkipLast(1)
+            .Select(x => x.Skip(1).SkipLast(1))
+            .Select(x => x.Where(y => y == '#').Count())
+            .Aggregate(0, (accu, value) => accu += value);
     }
 }

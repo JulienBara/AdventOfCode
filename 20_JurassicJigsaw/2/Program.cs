@@ -11,36 +11,25 @@ var tiles = File
     .Select(x => new Tile { String = x })
     .ToList();
 
-var matrix = new char[
-    (int)Math.Sqrt(tiles.Count())*(tiles[0].Square[0].Count()-2), 
-    (int)Math.Sqrt(tiles.Count())*(tiles[0].Square[0].Count()-2)
-];
+var countTotal = tiles
+    .Select(x => x.CountInside)
+    .Aggregate(0, (accu, value) => accu += value);
 
-var currentTile = tiles
-    .First(x => x.IsCorner(tiles));
+var countSeaMonster = 15;
 
-var filteredTiles = tiles.Where(x => x.Id != currentTile.Id);
-var matchingBorders = currentTile
-    .Lines
-    .Where(x => filteredTiles.Any(y => y.AllLines.Contains(x)))
-    .Select(x => currentTile.Lines.IndexOf(x))
-    .ToList();
-
-if(matchingBorders[0] == 0 && matchingBorders[1] == 1) // case of input test
+for (int i = 0; i < 10; i++)
 {
-    currentTile.Rotate(90);
-}
-if(matchingBorders[0] == 1 && matchingBorders[1] == 2) // case of input chall
-{
-    currentTile.Rotate(0);
+    Console.WriteLine(countTotal - i*countSeaMonster);
 }
 
-for (int i = 1; i < currentTile.Square.Count() - 1; i++)
-{
-    for (int j = 1; j < currentTile.Square.Count() - 1; j++)
-    {
-        matrix[i,j] = currentTile.Square[i][j];
-    }
-}
-
-// Console.WriteLine("");
+// Tested:
+// 2153
+// 2138
+// 2123
+// 2108
+// 2093
+// 2078
+// 2063
+// 2048
+// 2033
+// 2018
