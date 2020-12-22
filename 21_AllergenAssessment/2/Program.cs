@@ -13,6 +13,7 @@ var foods = File
     .ToList();
 
 var allergens = new Dictionary<string,List<string>>();
+var matchingIngredient = new Dictionary<string,string>(); //allergen, ingredient
 
 foreach (var food in foods)
 {
@@ -36,8 +37,9 @@ while(allergens.Count() > 0)
     {
         allergen.Value.Remove(ingredient);
     }
+    matchingIngredient.Add(foundAllergen.Key,ingredient);
 };
 
-var sum = foods.Sum(x => x.Ingredients.Where(y => ingredients.Contains(y)).Count());
+var s = string.Join(',', matchingIngredient.OrderBy(x => x.Key).Select(x => x.Value));
 
-Console.WriteLine(sum);
+Console.WriteLine(s);
