@@ -6,13 +6,19 @@ var inputFile = @".\input";
 
 var numbers =  File
     .ReadAllText(inputFile)
-    .Select(x => int.Parse(x.ToString()))
+    .Select(x => long.Parse(x.ToString()))
     .ToList();
 
-var turnCount = 100;
+for (int i = numbers.Count + 1; i <= 1000000; i++)
+{
+    numbers.Add(i);
+}
+
+var turnCount = 10000000;
 
 for (int i = 0; i < turnCount; i++)
 {
+    Console.WriteLine(i);
     var first = numbers[0];
     var pickUps = numbers.GetRange(1, 3);
 
@@ -41,4 +47,4 @@ numbers.InsertRange(numbers.Count, poppedNumbers);
 // remove one
 numbers.Remove(1);
 
-Console.WriteLine(numbers.Aggregate("", (accu, value) => accu += value));
+Console.WriteLine(numbers[0] * numbers[1]);
