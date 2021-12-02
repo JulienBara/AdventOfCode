@@ -1,13 +1,13 @@
 ﻿open System.IO
 
 type Command = 
-    { Direction : string
-      Unit      : int }
+  { Direction: string
+    Unit : int }
 
 type Position = 
-    { Horizontal : int
-      Depth      : int
-      Aim        : int }
+  { Horizontal: int
+    Depth: int
+    Aim: int }
 
 let initialPosition = {
   Horizontal = 0
