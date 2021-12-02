@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -23,4 +24,4 @@ foreach (var number in numbers)
     slidingWindow.Dequeue();
 }
 
-System.Console.WriteLine(increasesCount);
+Console.WriteLine(increasesCount);

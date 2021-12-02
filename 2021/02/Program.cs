@@ -19,6 +19,6 @@ var position = File
         }
     );
 
-System.Console.WriteLine(position.Horizontal * position.Depth);
+Console.WriteLine(position.Horizontal * position.Depth);
 
 public record Command(string Direction, int Unit);
