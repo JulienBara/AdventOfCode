@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-var inputFile = @".\input";
+var inputFile = Path.Combine(".", "input");
 
 var numbers = File
     .ReadAllLines(inputFile)
