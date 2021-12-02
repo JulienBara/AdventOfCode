@@ -6,11 +6,13 @@ type Command =
 
 type Position = 
     { Horizontal : int
-      Depth      : int }
+      Depth      : int
+      Aim        : int }
 
 let initialPosition = {
   Horizontal = 0
   Depth = 0
+  Aim = 0
 }
 
 let parseLine (line: string)  = 
@@ -25,15 +27,18 @@ let applyCommand (position: Position) (command: Command) =
   match command with 
   | { Direction = "forward" } -> {  
       Horizontal = position.Horizontal + command.Unit
-      Depth = position.Depth
+      Depth = position.Depth + position.Aim * command.Unit
+      Aim = position.Aim
     }
   | { Direction = "down" } -> {  
       Horizontal = position.Horizontal
-      Depth = position.Depth + command.Unit
+      Depth = position.Depth 
+      Aim = position.Aim + command.Unit 
     }
   | { Direction = "up" } -> {  
       Horizontal = position.Horizontal
-      Depth = position.Depth - command.Unit
+      Depth = position.Depth 
+      Aim = position.Aim - command.Unit 
     }
 
 let printResult (position: Position) = printfn "%d" (position.Horizontal * position.Depth)
