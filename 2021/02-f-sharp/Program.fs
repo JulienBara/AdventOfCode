@@ -9,12 +9,6 @@ type Position =
     Depth: int
     Aim: int }
 
-let initialPosition = {
-  Horizontal = 0
-  Depth = 0
-  Aim = 0
-}
-
 let parseLine (line: string)  = 
   match line.Split(' ') with
     | [| direction; unit; |] -> 
@@ -40,6 +34,12 @@ let applyCommand (position: Position) (command: Command) =
       Depth = position.Depth 
       Aim = position.Aim - command.Unit 
     }
+
+let initialPosition = {
+  Horizontal = 0
+  Depth = 0
+  Aim = 0
+}
 
 let printResult (position: Position) = printfn "%d" (position.Horizontal * position.Depth)
 
