@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 var inputFile = @".\input";
@@ -9,11 +10,17 @@ var numbers = File
 
 var increasesCount = 0;
 int? previous = null;
+var slidingWindow = new Queue<int>();
 
 foreach (var number in numbers)
 {
-    if (previous < number) { increasesCount++; }
-    previous = number;
+    slidingWindow.Enqueue(number);
+    if (slidingWindow.Count < 3) { continue; }
+
+    var sum = slidingWindow.Sum();
+    if (previous < sum) { increasesCount++; }
+    previous = sum;
+    slidingWindow.Dequeue();
 }
 
 System.Console.WriteLine(increasesCount);
