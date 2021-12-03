@@ -14,9 +14,9 @@ let computeBalances = Array.mapi2 computeBalance
 
 let convertToMostCommonBits = Array.map (fun (balance: int) -> if balance >= 0 then '1' else '0')
 
-let convertToInt (s: char[]) = System.Convert.ToInt32(s |> System.String, 2)
+let convertFromBinaryToInt (s: char[]) = System.Convert.ToInt32(s |> System.String, 2)
 let mirror = Array.map (fun (x: char) -> if x = '1' then '0' else '1')
-let computeResult (mostCommonBytes: char[]) = (convertToInt mostCommonBytes) * (convertToInt (mirror mostCommonBytes))
+let computeResult (mostCommonBytes: char[]) = (convertFromBinaryToInt mostCommonBytes) * (convertFromBinaryToInt (mirror mostCommonBytes))
 
 Path.Combine(".", "input")
 |> File.ReadAllLines 
