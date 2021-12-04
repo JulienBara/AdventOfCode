@@ -37,7 +37,14 @@ var input = File
 
 var endOfGame = input.Numbers
     .Aggregate(
-        new { IsGameEnded = false, WinningBoard = 0, LastNumer = 0, Boards = input.Boards.Select(x => new bool[5, 5]).ToArray() },
+        new
+        {
+            IsGameEnded = false,
+            LosingBoard = 0,
+            WinningBoards = input.Boards.Select(x => false).ToList(),
+            LastNumer = 0,
+            Boards = input.Boards.Select(x => new bool[5, 5]).ToArray()
+        },
         (accu, number) =>
         {
             if (accu.IsGameEnded) { return accu; }
@@ -55,13 +62,20 @@ var endOfGame = input.Numbers
                         if (Enumerable.Range(0, 5).All(x => accu.Boards[boardIndex][i, x])
                         || Enumerable.Range(0, 5).All(x => accu.Boards[boardIndex][x, j]))
                         {
-                            return new
+                            accu.WinningBoards[boardIndex] = true;
+
+
+                            if (accu.WinningBoards.All(x => x))
                             {
-                                IsGameEnded = true,
-                                WinningBoard = boardIndex,
-                                LastNumer = number,
-                                Boards = accu.Boards
-                            };
+                                return new
+                                {
+                                    IsGameEnded = true,
+                                    LosingBoard = boardIndex,
+                                    WinningBoards = accu.WinningBoards,
+                                    LastNumer = number,
+                                    Boards = accu.Boards
+                                };
+                            }
                         }
                     }
                 }
@@ -75,9 +89,9 @@ for (int i = 0; i < 5; i++)
 {
     for (int j = 0; j < 5; j++)
     {
-        if (!endOfGame.Boards[endOfGame.WinningBoard][i, j])
+        if (!endOfGame.Boards[endOfGame.LosingBoard][i, j])
         {
-            sumUnmarkedNumbers += input.Boards[endOfGame.WinningBoard][i][j];
+            sumUnmarkedNumbers += input.Boards[endOfGame.LosingBoard][i][j];
         }
     }
 }
