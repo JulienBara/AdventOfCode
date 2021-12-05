@@ -20,7 +20,6 @@ var result = File
         Int32.Parse(x[1][0]),
         Int32.Parse(x[1][1])
     ))
-    .Where(x => x.x1 == x.x2 || x.y1 == x.y2)
     .SelectMany(Mapper)
     .GroupBy(x => x)
     .Select(x => x.Count())
@@ -32,13 +31,15 @@ Console.WriteLine(result);
 
 IEnumerable<Point> Mapper(Line line)
 {
-    for (int x = Math.Min(line.x1, line.x2); x <= Math.Max(line.x1, line.x2); x++)
+    var length = Math.Sqrt(Math.Pow(line.x2 - line.x1, 2) + Math.Pow(line.y2 - line.y1, 2));
+    var directionX = line.x1 == line.x2 ? 0 : (line.x2 - line.x1) / Math.Abs(line.x2 - line.x1);
+    var directionY = line.y1 == line.y2 ? 0 : (line.y2 - line.y1) / Math.Abs(line.y2 - line.y1);
+
+    for (int x = line.x1, y = line.y1; x != line.x2 || y != line.y2; x += directionX, y += directionY)
     {
-        for (int y = Math.Min(line.y1, line.y2); y <= Math.Max(line.y1, line.y2); y++)
-        {
-            yield return new Point(x, y);
-        }
+        yield return new Point(x, y);
     }
+    yield return new Point(line.x2, line.y2);
 }
 
 record Line(int x1, int y1, int x2, int y2);
