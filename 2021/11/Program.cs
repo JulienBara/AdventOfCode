@@ -22,8 +22,9 @@ for (int i = 0; i < size; i++)
 
 var flashesCount = 0;
 var greyPositions = new Queue<(int, int)>();
+var step = 0;
 
-for (int step = 1; step <= 100; step++)
+while (!areOnly0(grid))
 {
     for (int i = 0; i < size; i++)
     {
@@ -55,6 +56,19 @@ for (int step = 1; step <= 100; step++)
             }
         }
     }
+
+    step++;
 }
 
-Console.WriteLine(flashesCount);
+Console.WriteLine(step);
+
+bool areOnly0(int[,] grid)
+{
+    var enumerator = grid.GetEnumerator();
+    while (enumerator.MoveNext())
+    {
+        if ((int)enumerator.Current != 0)
+            return false;
+    };
+    return true;
+}
