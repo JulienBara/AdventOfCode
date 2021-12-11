@@ -20,31 +20,41 @@ for (int i = 0; i < rowsCount; i++)
     }
 }
 
-var lowestPointsScore = 0;
+var bassinsSizes = new List<int>();
 for (int i = 0; i < rowsCount; i++)
 {
     for (int j = 0; j < colsCount; j++)
     {
-        if (isLowestPoint(i, j))
-            lowestPointsScore += grid[i, j] + 1;
+        if (grid[i, j] == 9) continue;
+
+        var bassinSize = computeBassinSize(i, j);
+        bassinsSizes.Add(bassinSize);
     }
 }
 
-Console.WriteLine(lowestPointsScore);
+var score = bassinsSizes
+    .OrderByDescending(x => x)
+    .Take(3)
+    .Aggregate(
+        1,
+        (accu, value) => accu *= value
+    );
 
-bool isLowestPoint(int i, int j)
+Console.WriteLine(score);
+
+int computeBassinSize(int i, int j)
 {
-    if (i > 0 && grid[i - 1, j] <= grid[i, j])
-        return false;
+    if (i < 0) return 0;
+    if (j < 0) return 0;
+    if (i > rowsCount - 1) return 0;
+    if (j > colsCount - 1) return 0;
+    if (grid[i, j] == 9) return 0;
 
-    if (j > 0 && grid[i, j - 1] <= grid[i, j])
-        return false;
+    grid[i, j] = 9;
 
-    if (i < rowsCount - 1 && grid[i + 1, j] <= grid[i, j])
-        return false;
-
-    if (j < colsCount - 1 && grid[i, j + 1] <= grid[i, j])
-        return false;
-
-    return true;
+    return 1
+    + computeBassinSize(i - 1, j)
+    + computeBassinSize(i + 1, j)
+    + computeBassinSize(i, j - 1)
+    + computeBassinSize(i, j + 1);
 }
