@@ -26,21 +26,28 @@ var graph = File
         }
     );
 
-var score = countPaths("start", new List<string>());
+var score = countPaths("start", new List<string>(), null);
 
 Console.WriteLine(score);
 
-int countPaths(string currentCave, List<string> visitedSmallCaves)
+int countPaths(string currentCave, List<string> visitedSmallCaves, string smallCaveVisitedTwice)
 {
     if (currentCave == "end") { return 1; }
-    if (graph[currentCave].All(x => visitedSmallCaves.Contains(x))) { return 0; }
+    if (smallCaveVisitedTwice == "start") { return 0; } // can't visit start twice
+    if (smallCaveVisitedTwice == currentCave) { return 0; } // can't visit a small cave three times
+    // can't visit a small cave twice of already one small cave has been visited twice
+    if (smallCaveVisitedTwice != null && visitedSmallCaves.Contains(currentCave)) { return 0; }
+
+    if (visitedSmallCaves.Contains(currentCave))
+        smallCaveVisitedTwice = currentCave;
 
     var count = 0;
-    foreach (var nextCave in graph[currentCave].Where(x => !visitedSmallCaves.Contains(x)))
+    foreach (var nextCave in graph[currentCave])
     {
         count += countPaths(
             nextCave,
-            currentCave.All(x => Char.IsLower(x)) ? visitedSmallCaves.Prepend(currentCave).ToList() : visitedSmallCaves
+            currentCave.All(x => Char.IsLower(x)) ? visitedSmallCaves.Prepend(currentCave).ToList() : visitedSmallCaves,
+            smallCaveVisitedTwice
         );
     }
     return count;
