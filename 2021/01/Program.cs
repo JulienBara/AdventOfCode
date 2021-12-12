@@ -8,22 +8,16 @@ var inputFile = Path.Combine(".", "input");
 
 // 1
 
-{
-    var numbers = File
-        .ReadAllLines(inputFile)
-        .Select(x => System.Int32.Parse(x));
+var result1 = File
+    .ReadAllLines(inputFile)
+    .Select(x => System.Int32.Parse(x))
+    .SelectMany(x => new List<int> { x, x })
+    .Skip(1)
+    .SkipLast(1)
+    .Chunk(2)
+    .Aggregate(0, (accu, value) => accu += value[0] < value[1] ? 1 : 0);
 
-    var increasesCount = 0;
-    int? previous = null;
-
-    foreach (var number in numbers)
-    {
-        if (previous < number) { increasesCount++; }
-        previous = number;
-    }
-
-    System.Console.WriteLine(increasesCount);
-}
+System.Console.WriteLine(result1);
 
 // 2
 
