@@ -5,23 +5,47 @@ using System.Linq;
 
 var inputFile = Path.Combine(".", "input");
 
-var numbers = File
-    .ReadAllLines(inputFile)
-    .Select(x => System.Int32.Parse(x));
 
-var increasesCount = 0;
-int? previous = null;
-var slidingWindow = new Queue<int>();
+// 1
 
-foreach (var number in numbers)
 {
-    slidingWindow.Enqueue(number);
-    if (slidingWindow.Count < 3) { continue; }
+    var numbers = File
+        .ReadAllLines(inputFile)
+        .Select(x => System.Int32.Parse(x));
 
-    var sum = slidingWindow.Sum();
-    if (previous < sum) { increasesCount++; }
-    previous = sum;
-    slidingWindow.Dequeue();
+    var increasesCount = 0;
+    int? previous = null;
+
+    foreach (var number in numbers)
+    {
+        if (previous < number) { increasesCount++; }
+        previous = number;
+    }
+
+    System.Console.WriteLine(increasesCount);
 }
 
-Console.WriteLine(increasesCount);
+// 2
+
+{
+    var numbers = File
+        .ReadAllLines(inputFile)
+        .Select(x => System.Int32.Parse(x));
+
+    var increasesCount = 0;
+    int? previous = null;
+    var slidingWindow = new Queue<int>();
+
+    foreach (var number in numbers)
+    {
+        slidingWindow.Enqueue(number);
+        if (slidingWindow.Count < 3) { continue; }
+
+        var sum = slidingWindow.Sum();
+        if (previous < sum) { increasesCount++; }
+        previous = sum;
+        slidingWindow.Dequeue();
+    }
+
+    Console.WriteLine(increasesCount);
+}
