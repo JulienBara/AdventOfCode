@@ -20,3 +20,9 @@ dotnet run
 ```
 dotnet new console -lang "F#"
 ```
+
+### Setup python env
+
+```
+pip3 install -r requirements.txt
+```
