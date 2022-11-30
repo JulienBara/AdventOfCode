@@ -4,13 +4,14 @@ using System.IO;
 using System.Linq;
 
 var inputFile = Path.Combine(".", "input");
+var numbers = File
+    .ReadAllLines(inputFile)
+    .Select(x => System.Int32.Parse(x));
 
 
 // 1
 
-var result1 = File
-    .ReadAllLines(inputFile)
-    .Select(x => System.Int32.Parse(x))
+var result1 = numbers
     .SelectMany(x => new List<int> { x, x })
     .Skip(1)
     .SkipLast(1)
@@ -22,10 +23,6 @@ System.Console.WriteLine(result1);
 // 2
 
 {
-    var numbers = File
-        .ReadAllLines(inputFile)
-        .Select(x => System.Int32.Parse(x));
-
     var increasesCount = 0;
     int? previous = null;
     var slidingWindow = new Queue<int>();
