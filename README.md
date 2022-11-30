@@ -15,6 +15,14 @@ dotnet new console
 dotnet run
 ```
 
+or 
+
+To run without rebuilding (when testing performances):
+
+```
+dotnet run --no-build
+```
+
 ### New exercise in F#
 
 ```
