@@ -31,3 +31,28 @@ var result1 = File
     .Sum();
 
 System.Console.WriteLine(result1);
+
+var result2 = File
+    .ReadAllLines(inputFile)
+    .Chunk(3)
+    .Select(x => {
+        foreach (var i in x[2])
+        {
+            if(x[1].Contains(i)) {
+                if(x[0].Contains(i)) {
+                    return i.ToString();
+                }       
+            }
+        }
+
+        throw new Exception("should not happen");
+    })
+    .Select(x => Encoding.ASCII.GetBytes(x)[0])
+    .Select(x => 
+        x > 96 ?
+            x - 96 : // 'a' = 97
+            26 + x - 64 // 'A' = 65
+    )
+    .Sum();
+
+System.Console.WriteLine(result2);
