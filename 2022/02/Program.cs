@@ -8,7 +8,8 @@ var inputFile = Path.Combine(".", "input");
 var result1 = File
     .ReadAllLines(inputFile)
     .Select(x => x.Split())
-    .Select(x => {
+    .Select(x =>
+    {
         if (x[0] == "A" && x[1] == "X") { return 1 + 3; }
         if (x[0] == "A" && x[1] == "Y") { return 2 + 6; }
         if (x[0] == "A" && x[1] == "Z") { return 3 + 0; }
@@ -30,7 +31,8 @@ System.Console.WriteLine(result1);
 var result2 = File
     .ReadAllLines(inputFile)
     .Select(x => x.Split())
-    .Select(x => {
+    .Select(x =>
+    {
         if (x[0] == "A" && x[1] == "X") { return 3 + 0; }
         if (x[0] == "A" && x[1] == "Y") { return 1 + 3; }
         if (x[0] == "A" && x[1] == "Z") { return 2 + 6; }

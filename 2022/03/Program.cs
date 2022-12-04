@@ -12,10 +12,12 @@ var result1 = File
         x.Take(x.Length / 2),
         x.Skip(x.Length / 2)
     ))
-    .Select(x => {
+    .Select(x =>
+    {
         foreach (var item in x.Item2)
         {
-            if(x.Item1.Contains(item)) {
+            if (x.Item1.Contains(item))
+            {
                 return item.ToString();
             }
         }
@@ -23,7 +25,7 @@ var result1 = File
         throw new Exception("should not happen");
     })
     .Select(x => Encoding.ASCII.GetBytes(x)[0])
-    .Select(x => 
+    .Select(x =>
         x > 96 ?
             x - 96 : // 'a' = 97
             26 + x - 64 // 'A' = 65
@@ -35,20 +37,23 @@ System.Console.WriteLine(result1);
 var result2 = File
     .ReadAllLines(inputFile)
     .Chunk(3)
-    .Select(x => {
+    .Select(x =>
+    {
         foreach (var i in x[2])
         {
-            if(x[1].Contains(i)) {
-                if(x[0].Contains(i)) {
+            if (x[1].Contains(i))
+            {
+                if (x[0].Contains(i))
+                {
                     return i.ToString();
-                }       
+                }
             }
         }
 
         throw new Exception("should not happen");
     })
     .Select(x => Encoding.ASCII.GetBytes(x)[0])
-    .Select(x => 
+    .Select(x =>
         x > 96 ?
             x - 96 : // 'a' = 97
             26 + x - 64 // 'A' = 65
