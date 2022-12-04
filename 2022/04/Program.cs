@@ -22,3 +22,20 @@ var result1 = File
     .Count();
 
 System.Console.WriteLine(result1);
+
+var result2 = File
+    .ReadAllLines(inputFile)
+    .Select(x => x
+        .Split(",")
+        .Select(y => y
+            .Split("-")
+            .Select(z => Int32.Parse(z))
+            .ToList()
+        )
+        .Select(y => Enumerable.Range(y[0], y[1] - y[0] + 1).ToList())
+        .ToList()
+    )
+    .Where(x => x[0].Intersect(x[1]).Count() > 0)
+    .Count();
+
+System.Console.WriteLine(result2);
