@@ -12,8 +12,8 @@ var result1 = File
         "",
         (acc, x) => Int32.TryParse(acc, out _)
             ? acc
-            : acc.Append(x.c).TakeLast(4).Distinct().Count() < 4
-                ? String.Join("", acc.Append(x.c).TakeLast(4))
+            : (acc = String.Join("", acc.Append(x.c).TakeLast(4))).Distinct().Count() < 4
+                ? acc
                 : x.i
     );
 
@@ -26,8 +26,8 @@ var result2 = File
         "",
         (acc, x) => Int32.TryParse(acc, out _)
             ? acc
-            : acc.Append(x.c).TakeLast(14).Distinct().Count() < 14
-                ? String.Join("", acc.Append(x.c).TakeLast(14))
+            : (acc = String.Join("", acc.Append(x.c).TakeLast(14))).Distinct().Count() < 14
+                ? acc
                 : x.i
     );
 
