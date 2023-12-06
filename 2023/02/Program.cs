@@ -30,3 +30,30 @@ var result1 = File
     ;
 
 System.Console.WriteLine(result1);
+
+var result2 = File
+    .ReadAllLines(inputFile)
+    .Select(line => new {
+        Sets = line.Split(": ")[1].Split("; ").Select(set => new {
+            Red =  Regex.Match(set, @"(?<red>\d+) red").Groups["red"].Value,
+            Green = Regex.Match(set, @"(?<green>\d+) green").Groups["green"].Value,
+            Blue = Regex.Match(set, @"(?<blue>\d+) blue").Groups["blue"].Value
+        })
+    })
+    .Select(game => new {
+        Sets = game.Sets.Select(set => new {
+            Red = Int32.TryParse(set.Red, out _) ? Int32.Parse(set.Red) : 0,
+            Green = Int32.TryParse(set.Green, out _) ? Int32.Parse(set.Green) : 0,
+            Blue = Int32.TryParse(set.Blue, out _) ? Int32.Parse(set.Blue) : 0,
+        })
+    })
+    .Select(game => new {
+        Red = game.Sets.Select(set => set.Red).Max(),
+        Green = game.Sets.Select(set => set.Green).Max(),
+        Blue = game.Sets.Select(set => set.Blue).Max(),
+    })
+    .Select(game => game.Red * game.Green * game.Blue)
+    .Sum()
+    ;
+
+System.Console.WriteLine(result2);
